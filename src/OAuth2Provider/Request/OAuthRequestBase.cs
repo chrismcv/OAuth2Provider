@@ -41,33 +41,33 @@ namespace OAuth2Provider.Request
 
         public string GrantType
         {
-            get { return _request.Properties[OAuthTokens.GrantType]; }
+            get { return _request.Properties.SafeGetValue(OAuthTokens.GrantType); }
         }
         public string Username
         {
-            get { return _request.Properties[OAuthTokens.Username]; }
+            get { return _request.Properties.SafeGetValue(OAuthTokens.Username); }
         }
         public string Password
         {
-            get { return _request.Properties[OAuthTokens.Password]; }
+            get { return _request.Properties.SafeGetValue(OAuthTokens.Password); }
         }
         public string Scope
         {
-            get { return _request.Properties[OAuthTokens.Scope]; }
+            get { return _request.Properties.SafeGetValue(OAuthTokens.Scope); }
         }
         public string AccessToken
         {
             get
             {
-                var accessToken = _request.Properties[OAuthTokens.AccessToken];
+                var accessToken = _request.Properties.SafeGetValue(OAuthTokens.AccessToken);
                 if (!string.IsNullOrWhiteSpace(accessToken))
                     return accessToken;
 
-                accessToken = _request.Properties[OAuthTokens.OAuthToken];
+                accessToken = _request.Properties.SafeGetValue(OAuthTokens.OAuthToken);
                 if (!string.IsNullOrWhiteSpace(accessToken))
                     return accessToken;
 
-                var authHeader = _request.Headers[HeaderType.Authorization] + "";
+                var authHeader = _request.Headers.SafeGetValue(HeaderType.Authorization) + "";
                 if(authHeader.Contains("OAuth") || authHeader.Contains("Bearer"))
                     accessToken = authHeader.Replace("OAuth ", "").Replace("Bearer ", "").Trim();
 
@@ -76,34 +76,34 @@ namespace OAuth2Provider.Request
         }
         public string TokenType
         {
-            get { return _request.Properties[OAuthTokens.TokenType]; }
+            get { return _request.Properties.SafeGetValue(OAuthTokens.TokenType); }
         }
         public string ExpiresIn
         {
-            get { return _request.Properties[OAuthTokens.ExpiresIn]; }
+            get { return _request.Properties.SafeGetValue(OAuthTokens.ExpiresIn); }
         }
         public string RefreshToken
         {
-            get { return _request.Properties[OAuthTokens.RefreshToken]; }
+            get { return _request.Properties.SafeGetValue(OAuthTokens.RefreshToken); }
         }
         public string ResponseType
         {
-            get { return _request.Properties[OAuthTokens.ResponseType]; }
+            get { return _request.Properties.SafeGetValue(OAuthTokens.ResponseType); }
         }
         public string RedirectUri
         {
-            get { return _request.Properties[OAuthTokens.RedirectUri]; }
+            get { return _request.Properties.SafeGetValue(OAuthTokens.RedirectUri); }
         }
         public string State
         {
-            get { return _request.Properties[OAuthTokens.State]; }
+            get { return _request.Properties.SafeGetValue(OAuthTokens.State); }
         }
         public string ClientId
         {
             get
             {
-                var clientID = _request.Properties[OAuthTokens.ClientId];
-                if(!string.IsNullOrWhiteSpace(clientID))
+                var clientID = _request.Properties.SafeGetValue(OAuthTokens.ClientId);
+                if (!string.IsNullOrWhiteSpace(clientID))
                     return clientID;
 
                 return BasicAuthenticationScheme.Username;
@@ -114,7 +114,7 @@ namespace OAuth2Provider.Request
             get
             {
 
-                var clientID = _request.Properties[OAuthTokens.ClientSecret];
+                var clientID = _request.Properties.SafeGetValue(OAuthTokens.ClientSecret);
                 if (!string.IsNullOrWhiteSpace(clientID))
                     return clientID;
 
@@ -127,7 +127,7 @@ namespace OAuth2Provider.Request
         }
         public string AuthorizationCode
         {
-            get { return _request.Properties[OAuthTokens.Code]; }
+            get { return _request.Properties.SafeGetValue(OAuthTokens.Code); }
         }
         public string Method
         {
@@ -150,4 +150,5 @@ namespace OAuth2Provider.Request
             }
         }
     }
+
 }

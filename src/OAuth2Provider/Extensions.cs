@@ -159,5 +159,14 @@ namespace OAuth2Provider
         {
             return new HttpBasicAuthenticationScheme(request);
         }
+
+        public static string SafeGetValue(this IDictionary<string, string> dictionary, string key)
+        {
+            string value;
+            if (dictionary.TryGetValue(key, out value))
+                return value;
+            return null;
+
+        }
     }
 }
